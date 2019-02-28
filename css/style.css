@@ -1,0 +1,23 @@
+.dropbox{
+    display: block;
+    width: 50%;
+    height: auto;
+    text-align: center;
+    padding: 20px;
+    margin: 0 auto;
+    border: 1px dashed grey;
+}
+
+span{
+    display: inline-block;
+}
+
+.hoverwithfile{
+    background: lightgreen;
+}
+
+#results{
+    text-align: center;
+}
+
+#mapid { height: 500px; }
