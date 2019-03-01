@@ -1,11 +1,13 @@
 .dropbox{
     display: block;
-    width: 50%;
+    width: 80%;
     height: auto;
     text-align: center;
     padding: 20px;
-    margin: 0 auto;
+    margin: 20px auto;
     border: 1px dashed grey;
+    -webkit-transition: .5s;
+    transition: .5s;
 }
 
 span{
@@ -16,8 +18,13 @@ span{
     background: lightgreen;
 }
 
-#results{
+#currentCoords, #inputCoords, #selectedCoords, #haversine-distance{
     text-align: center;
+    font-size: 1.5rem;
+    margin: 5px;
+    transition: ease-in;
+    -webkit-transition: .5s;
+    transition: .5s;
 }
 
 #mapid { height: 500px; }

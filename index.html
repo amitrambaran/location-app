@@ -21,20 +21,19 @@
 <body>
     <main>
         <section>
-            <div id="droppable" class="dropbox" droppable="true" ondragover="dragOverHandler(event)" ondrop="dropHandler(event)"
-                ondragleave="dragLeaveHandler(event)">
+            <div id="droppable" class="dropbox" droppable="true" ondragover="dragOverHandler(event)"
+                ondrop="dropHandler(event)" ondragleave="dragLeaveHandler(event)">
                 <p id="dropbox-content">Drag coordinate text file here</p>
                 <i class="fas fa-download fa-3x"></i>
             </div>
         </section>
-        <section>
-            <div id="results">
-            </div>
-        </section>
-
         <div id="mapid"></div>
-
-
+        <section>
+            <div id="currentCoords"></div>
+            <div id="inputCoords"></div>
+            <div id="selectedCoords"></div>
+            <div id="haversine-distance"></div>
+        </section>
         <script src="js/main.js"></script>
     </main>
 </body>
