@@ -1,309 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Location App</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description"
-        content="Amit Rambaran is a web developer experienced with creating websites for small business. He also creates web apps in his spare time with tools like Javascript, AJAX, Node.js, and much more.">
-    <meta name="keywords"
-        content="Amit Rambaran, Web Development, Graphic Design, Toronto, Branding, Fullstack, Website, Junior Web Developer, Hire, Job">
-    <meta name="author" content="Amit Rambaran">
-    <meta property="og:title" content="Amit Rambaran">
-    <meta property="og:description"
-        content="Amit Rambaran is a web developer experienced with creating websites for small business. He also creates web apps in his spare time with tools like Javascript, AJAX, Node.js, and much more.">
-    <meta property="og:image" content="https://i.imgur.com/eBk49vb.png">
-    <meta property="og:url" content="https://amitrambaran.me">
-    <title>Amit Rambaran</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
-        integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/app.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
-    <link rel="icon" type="image/png" href="assets/favicon.ico">
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-79014066-4"></script>
-
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'UA-79014066-4');
-    </script>
-
+    <link rel="stylesheet" type="text/css" media="screen" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+        integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+        crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+        integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+        crossorigin=""></script>
 </head>
 
 <body>
-
-    <nav class="navbar is-outlined" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-            <a class="navbar-item">
-                <i class="fab fa-autoprefixer fa-2x" id="logo"></i>
-            </a>
-
-            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
-                data-target="myNavbar">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-            </a>
-        </div>
-
-        <div id="myNavbar" class="navbar-menu">
-            <div class="navbar-start">
-                <a href="#portfolio" class="navbar-item">
-                    Portfolio
-                </a>
-                <!--                 <a href="#clientele" class="navbar-item">
-                    Clientele
-                </a> -->
-                <a href="#contact" class="navbar-item">
-                    Contact
-                </a>
+    <main>
+        <section>
+            <div id="droppable" class="dropbox" droppable="true" ondragover="dragOverHandler(event)"
+                ondrop="dropHandler(event)" ondragleave="dragLeaveHandler(event)">
+                <p id="dropbox-content">Drag coordinate text file here</p>
+                <i class="fas fa-download fa-3x"></i>
             </div>
-            <div class="navbar-end">
-                <a class="navbar-item" href="assets/amit-rambaran-resume.pdf">
-                    View Resume
-                </a>
+        </section>
+        <div id="mapid"></div>
+        <section>
+            <div id="currentCoords"></div>
+            <div id="inputCoords"></div>
+            <div id="selectedCoords"></div>
+            <div id="haversine-distance"></div>
+            <div id="how-to-use">
+                <h6>How to use:</h6>
+                <ol>
+                    <li>Allow location access in your web browser to view your current location.</li>
+                    <li>Drag and drop a text file with a latitude and longitude seperated by a comma. This is your
+                        dropped location.</li>
+                    <li>Your distance from the dropped location can now be seen. To change your initial location,
+                        reset it by clicking your new initial location on the map.</li>
+                    <li> This is your selected location, which can be dragged around anywhere on the map to update your distance from the dropped location.</li>
+                </ol>
             </div>
-        </div>
-    </nav>
-
-    <!--Me-->
-    <div class="section">
-        <div class="container column is-two-fifths is-centered">
-            <div class="content">
-                <p class="subtitle"><span id="name">Amit Rambaran</span><span id="fullstack-text">Web
-                        Developer</span></p>
-            </div>
-        </div>
-    </div>
-
-    <!--Portfolio-->
-
-    <div class="section">
-        <div class="container" id="portfolio">
-            <div class="title">
-                Portfolio
-            </div>
-
-
-            <div class="columns is-mobile is-centered">
-                <div class="card">
-                    <div class="card-content">
-                        <p class="title">
-                            Weather App
-                            <a href="https://github.com/amitrambaran/weather-app"><i
-                                    class="fab fa-github fa-lg"></i></a>
-                        </p>
-                        <p>A dynamic, responsive weather app that utilizes the OpenWeatherMap API to display the current
-                            weather/five day forecast asynchronously.</p>
-                        <div class="container tags">
-                            <span class="tag is-dark">HTML</span>
-                            <span class="tag is-dark">CSS</span>
-                            <span class="tag is-dark">Javascript</span>
-                            <span class="tag is-dark">AJAX</span>
-                            <span class="tag is-dark">JSON</span>
-                            <span class="tag is-dark">OpenWeatherMap API</span>
-                        </div>
-                        <img src="assets/weather-app.png" alt="">
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="columns is-mobile is-centered">
-                <div class="card">
-                    <div class="card-content">
-                        <p class="title">
-                            Automobile Part Database
-                        </p>
-                        <p>A database created for quality engineers and paintline managers in order to
-                            make the process of
-                            identifying and finding information on parts more accessible and efficient. (Done
-                            during Magna
-                            Internship)</p>
-                        <div class="container tags">
-                            <span class="tag is-dark">HTML</span>
-                            <span class="tag is-dark">CSS</span>
-                            <span class="tag is-dark">Skeleton</span>
-                            <span class="tag is-dark">PHP</span>
-                            <span class="tag is-dark">MSSQL</span>
-                        </div>
-                        <img src="assets/magna-part-database.png" alt="">
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="columns is-mobile is-centered">
-                <div class="card">
-                    <div class="card-content">
-                        <p class="title">
-                            Location App
-                            <a href="https://github.com/amitrambaran/location-app"><i
-                                    class="fab fa-github fa-lg"></i></a>
-                        </p>
-                        <p>A location based web app that provides the distance from your current location to a specified
-                            location using the Haversine formula on a visual map.</p>
-                        <div class="container tags">
-                            <span class="tag is-dark">HTML</span>
-                            <span class="tag is-dark">CSS</span>
-                            <span class="tag is-dark">Javascript</span>
-                            <span class="tag is-dark">JSON</span>
-                            <span class="tag is-dark">MapBox API</span>
-                            <span class="tag is-dark">OpenStreetMap API</span>
-                            <span class="tag is-dark">Geolocation API</span>
-                            <span class="tag is-dark">Drag & Drop</span>
-                            <span class="tag is-dark">Web Worker</span>
-                        </div>
-                        <img src="assets/location-app.png" alt="">
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="columns is-mobile is-centered">
-                <div class="card">
-                    <div class="card-content">
-                        <p class="title">
-                            Todo List App
-                            <a href="https://github.com/amitrambaran/todo-list"><i class="fab fa-github fa-lg"></i></a>
-                        </p>
-                        <p>A simple, beautiful todo list application with an add, delete and strikeout
-                            function.</p>
-
-                        <div class="container tags">
-                            <span class="tag is-dark">HTML</span>
-                            <span class="tag is-dark">CSS</span>
-                            <span class="tag is-dark">Javascript</span>
-                            <span class="tag is-dark">jQuery</span>
-                        </div>
-                        <p class="codepen" data-height="519" data-theme-id="light" data-default-tab="result"
-                            data-user="amitrambaran" data-slug-hash="qgRRRo"
-                            style="height: 519px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;"
-                            data-pen-title="Todo List App">
-                            <span>See the Pen <a href="https://codepen.io/amitrambaran/pen/qgRRRo/">
-                                    Todo List App</a> by Amit Rambaran (<a
-                                    href="https://codepen.io/amitrambaran">@amitrambaran</a>)
-                                on <a href="https://codepen.io">CodePen</a>.</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="columns is-mobile is-centered">
-                <div class="card">
-                    <div class="card-content">
-                        <p class="title">
-                            SignatureBySB
-                            <a href="https://github.com/amitrambaran/signaturebysb"><i
-                                    class="fab fa-github fa-lg"></i></a>
-                        </p>
-                        <p>A website created for SignatureBySB, a well renowned DJ and producer in the Toronto
-                            music industry.
-                            Created with Bootstrap for a simplistic and functional responsive experience.</p>
-                        <div class="container tags">
-                            <span class="tag is-dark">HTML</span>
-                            <span class="tag is-dark">CSS</span>
-                            <span class="tag is-dark">Bootstrap</span>
-                            <span class="tag is-dark">Javascript</span>
-                        </div>
-                        <img src="assets/sb-site.png" alt="">
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="columns is-mobile is-centered">
-                <div class="card">
-                    <div class="card-content">
-                        <p class="title">
-                            Colour Game
-                            <a href="https://github.com/amitrambaran/colour-game"><i
-                                    class="fab fa-github fa-lg"></i></a>
-                        </p>
-                        <p>An RGB colour guessing game with two difficulties made to improve colour
-                            identification skills among
-                            web/graphic designers.</p>
-                        <div class="container tags">
-                            <span class="tag is-dark">HTML</span>
-                            <span class="tag is-dark">CSS</span>
-                            <span class="tag is-dark">Javascript</span>
-                        </div>
-                        <p class="codepen" data-height="713" data-theme-id="light" data-default-tab="result"
-                            data-user="amitrambaran" data-slug-hash="WPQXPB"
-                            style="height: 713px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;"
-                            data-pen-title="RGB Colour Game">
-                            <span>See the Pen <a href="https://codepen.io/amitrambaran/pen/WPQXPB/">
-                                    RGB Colour Game</a> by Amit Rambaran (<a
-                                    href="https://codepen.io/amitrambaran">@amitrambaran</a>)
-                                on <a href="https://codepen.io">CodePen</a>.</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- <div class="section">
-        <div class="container" id="clientele">
-            <div class="title">
-                Clientele
-            </div>
-            <div class="client-logos">
-                <img class="company" src="assets/tiger-logo.png" width="400" alt="">
-                <img class="company" src="assets/vipwrapz-logo.png" width="400" alt="">
-                <img class="company" src="assets/visionary-logo.png" alt="" width="300">
-                <img class="company" src="assets/hondasocial-logo.png" width="370" alt="">
-                <img class="company" src="assets/sb-logo.png" width="400" alt="">
-            </div>
-        </div>
-    </div>
- -->
-    <div class="section">
-        <div class="container" id="contact">
-            <div class="title">
-                Contact
-            </div>
-            <a href="https://www.linkedin.com/in/amitrambaran/"><i class="fab fa-linkedin-in fa-lg">
-                    LinkedIn</i><br><br></a>
-
-            <a href="https://github.com/amitrambaran/"><i class="fab fa-github fa-lg"> GitHub</i><br><br></a>
-            <a href="https://www.behance.net/amitrambaran"><i class="fab fa-behance-square fa-lg">
-                    Behance</i><br><br></a>
-        </div>
-        <div class="section" id="email-link">
-            <div class="subtitle has-text-centered" id="email-text">Interested in starting a project? <a
-                    href="mailto:amit.rambaran@gmail.com?subject=Project Inquiry">Let's
-                    chat.</a>
-            </div>
-        </div>
-    </div>
-    </div>
-
-    <footer class="footer">
-        <img id="badge" src="assets/made-with-bulma.png" width="140" alt="">
-        <div class="content has-text-centered" id="my-footer">
-            ©
-            <script type="text/javascript">
-                document.write(new Date().getFullYear() + " Amit Rambaran. All Rights Reserved.");
-            </script>
-        </div>
-    </footer>
-    <script defer src="https://static.codepen.io/assets/embed/ei.js"></script>
-    <script>
-        (function () {
-            var burger = document.querySelector(".burger");
-            var nav = document.querySelector("#" + burger.dataset.target);
-            burger.addEventListener("click", function () {
-                burger.classList.toggle("is-active");
-                nav.classList.toggle("is-active");
-            });
-        })();
-    </script>
+        </section>
+        <script src="js/main.js"></script>
+    </main>
 </body>
 
 </html>
