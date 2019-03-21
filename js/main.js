@@ -13,7 +13,7 @@ var latLongPair = {
     lngDropped: 0
 };
 
-var webWorker = new Worker('js/webworker.js');
+var webWorker = new Worker('./js/webworker.js');
 webWorker.addEventListener('error', handleWorkerError);
 webWorker.addEventListener('message', handleWorkerMessage);
 

@@ -28,3 +28,9 @@ span{
 }
 
 #mapid { height: 500px; }
+
+#how-to-use {
+    text-align: center;
+    width: 100%;
+    margin-top: 30px;
+}
