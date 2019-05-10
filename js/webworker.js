@@ -11,6 +11,7 @@ function haversineCalc(coordinates) {
     var dLat = toRad(x1);
     var x2 = lng2 - lng1;
     var dLon = toRad(x2);
+    //Calculate Haversine distance
     var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
         Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
         Math.sin(dLon / 2) * Math.sin(dLon / 2);

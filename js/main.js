@@ -37,9 +37,8 @@ window.onload = function () {
 function geoSuccess(position) {
     currentLat = position.coords.latitude;
     currentLong = position.coords.longitude;
-    //console.log(currentLat, currentLong);
     currentCoords.innerHTML = "Your current coordinates are: " + currentLat + ", " + currentLong;
-    //create map
+    //Create map
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         maxZoom: 18,
@@ -71,11 +70,14 @@ function dropHandler(event) {
     ignoreDrag(event);
     let file = event.dataTransfer.files[0];
     let reader = new FileReader();
+    //Read dragged file
     reader.onload = function (event) {
+        //Retrieve coordinates
         let coordinates = event.target.result, coordinateString = "", coordinateArray = coordinates.split(',');
         draggedLat = coordinateArray[0];
         draggedLong = coordinateArray[1];
         coordinateString = draggedLat + ", " + draggedLong;
+        //Display coordinates on DOM
         inputCoords.innerHTML = "Your dropped coordinates are: " + coordinateString;
         L.marker([draggedLat, draggedLong]).bindPopup("Dropped coordinates: " + coordinateString).addTo(mymap);
         draggedLatLongMap(draggedLat, draggedLong);
@@ -93,12 +95,14 @@ function ignoreDrag(event) {
 function onMapClick(event) {
     clickedCoords = event.latlng.toString();
     selectedCoords.innerHTML = "Your selected coordinates are: " + event.latlng.lat + ", " + event.latlng.lng;
+    //Add new marker on map
     var myMarker = L.marker([event.latlng.lat, event.latlng.lng], { title: "Your selected location", draggable: true })
         .addTo(mymap)
         .on('dragend', function () {
             let selectedLat = parseFloat(myMarker.getLatLng().lat);
             let selectedLong = parseFloat(myMarker.getLatLng().lng);
             console.log(selectedLat, selectedLong);
+            //Calculate distance from dropped location to selected location
             selectedCoords.innerHTML = "Your selected coordinates are: " + selectedLat + ", " + selectedLong;
             myMarker.bindPopup("Moved to: " + selectedLat + ", " + selectedLong + ".");
             selectedLatLongMap(selectedLat, selectedLong);
